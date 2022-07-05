@@ -15,14 +15,33 @@ public class FirstLesson {
         thread2.start();
 
         System.out.println("(main thread) Hello!");
+
+        thread1.join();
+        thread2.join();
+        Thread thread3 = new Thread() {
+            @Override
+            public void run() {
+                System.out.println("MOMENT");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                System.out.println("NASTAL");
+            }
+        };
+
+        thread3.start();
     }
+
 }
 
 class Runner implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i <1000; i++) {
-            System.out.println("(runner) " + i);
+            System.out.println("(Runner) " + i);
         }
     }
 }
@@ -31,12 +50,7 @@ class MyThread extends Thread {
     @Override
     public void run() {
         for (int i = 0; i <1000; i++) {
-//            try {
-//                Thread.sleep(100);
-//            } catch(InterruptedException e) {
-//                e.printStackTrace();
-//            }
-            System.out.println("(thread) " + i);
+            System.out.println("(MyThread) " + i);
         }
     }
 }
